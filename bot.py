@@ -24,12 +24,9 @@ class bot():
 
     def bind(self):
         auth = json.dumps({"verifyKey": self.authKey})
-        # print(str)
-        # headers = {}
         conn = self.conn
         conn.request('POST', '/verify', auth)
         response = conn.getresponse()
-        # print(response.status, response.reason)
         session = response.read().decode('utf-8')
         print(session)
         sessionKey = json.loads(session)['session']
@@ -57,7 +54,6 @@ class bot():
 
             response = conn.getresponse()
             data = response.read().decode('utf-8')
-            print('成功发送data节点119', data)
 
         def send_image(_id, url, message):
             sessionKey = self.sessionKey
@@ -167,7 +163,7 @@ class bot():
                     # 最后交给gpt
                     f.normal_chat(self, ev, item)
             except Exception as e:
-                print('except节点202')
+                print('except节点166')
                 print(e)
 
     async def fetch_message(self):
@@ -183,7 +179,7 @@ class bot():
                 if data:
                     threading.Thread(target=self.deal_data, args=(data,)).start()  # 多线程启动
             except Exception as e:
-                print('except210')
+                print('except182')
                 print(e)
             await asyncio.sleep(1)
 
@@ -248,4 +244,3 @@ if __name__ == '__main__':
     print('begin')
     b = bot("127.0.0.1", 5700)
     r = asyncio.run(b.run())
-    sys.exit(r)
